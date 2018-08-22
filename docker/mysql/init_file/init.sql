@@ -15,7 +15,11 @@ CREATE TABLE IF NOT EXISTS `account_db`.`user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COMMENT='會員資料表';
 
-INSERT INTO `account_db`.`user` (`id`, `account`, `password`) VALUES (0, "user1", "password");
+INSERT INTO `account_db`.`user` (`id`, `account`, `password`) VALUES (1, "user1", "password");
+INSERT INTO `account_db`.`user` (`id`, `account`, `password`) VALUES (2, "user2", "password");
+
+
+
 
 # Wallet Table
 CREATE TABLE IF NOT EXISTS `account_db`.`wallet` (
@@ -24,4 +28,6 @@ CREATE TABLE IF NOT EXISTS `account_db`.`wallet` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COMMENT='錢包資料表';
 
-INSERT INTO `account_db`.`wallet` (`id`, `balance`) VALUES (1, 1000);
+INSERT INTO `account_db`.`wallet` (`id`, `balance`) VALUES (1,1000);
+INSERT INTO `account_db`.`wallet` (`id`, `balance`) VALUES (2,500);
+

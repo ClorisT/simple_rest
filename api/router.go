@@ -4,6 +4,8 @@ import (
 	"simple_rest/api/controller/dbaccess"
 	"simple_rest/api/controller/demo"
 	"simple_rest/api/controller/fixme"
+	"simple_rest/api/controller/user"
+	"simple_rest/api/controller/user/pwd"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,6 +20,10 @@ func BindRouting(router *gin.Engine) {
 		v1.POST("/post", demo.Postting)
 		v1.GET("/user", dbaccess.GetUser)
 		v1.GET("/deposit", fixme.GetDepostit)
+		v1.POST("user/create", user.Creating)
+		v1.POST("user/delete", user.Delete)
+		v1.POST("user/pwd/change", pwd.Change)
+		v1.GET("user/login", user.Login)
 	}
 
 }

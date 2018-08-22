@@ -12,7 +12,7 @@ import (
 // PostingPersonInput : Input
 type PostingPersonInput struct {
 	Colors   []string  `form:"Colors[]"`
-	Name     string    `form:"Name" binding:"required"`
+	Name     string    `form:"Name" binding:"exists"`
 	Address  string    `form:"Address"`
 	Birthday time.Time `form:"Birthday" time_format:"2006-01-02T15:04:05Z07:00"`
 }
@@ -33,7 +33,7 @@ func Postting(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, res)
 		return
 	}
-
+	log.Println(person)
 	c.JSON(http.StatusOK, res)
 	return
 }

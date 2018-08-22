@@ -14,10 +14,10 @@ import (
 // GetDepostitInput : Input參數
 type GetDepostitInput struct {
 	// 玩家ID
-	UserID int32 `form:"UserID" binding:"required"`
+	UserID int32 `form:"UserID" binding:"exists"`
 
 	// 扣款餘額，若是要扣款 1 元，則代入 1
-	Amount int32 `form:"Amount" binding:"required,min=0"`
+	Amount int32 `form:"Amount" binding:"exists,min=0"`
 }
 
 // GetDepostitOutput : Output參數
@@ -44,11 +44,12 @@ func GetDepostit(c *gin.Context) {
 
 	// 從資料庫中取得目前錢包餘額
 	w, err := getBalanceByID(input.UserID)
+	fmt.Println("get balance111111")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, protocol.SomethingWrongRes(err))
 		return
 	}
-
+	fmt.Println("sdfdsafds1")
 	if w == nil {
 		c.JSON(http.StatusInternalServerError, protocol.SomethingWrongRes(
 			fmt.Errorf("Wallet Not Found. UserID:%d", input.UserID),
@@ -86,6 +87,7 @@ type Wallet struct {
 // getBalanceByID : 從資料庫中撈取錢包資料
 func getBalanceByID(ID int32) (wallet *Wallet, err error) {
 	fn := "getBalanceByID"
+	fmt.Println("database")
 
 	dbS := database.GetConn(env.AccountDB)
 
@@ -97,9 +99,10 @@ func getBalanceByID(ID int32) (wallet *Wallet, err error) {
 
 	var params []interface{}
 	params = append(params, ID)
-
+	fmt.Println(params)
 	rows, err := dbS.Query(sql, params...)
 	if err != nil {
+		fmt.Println("fail")
 		log.Fatalf("Exec Query Failed. fn:%s , err:%s", fn, err.Error())
 		return
 	}

@@ -57,12 +57,10 @@ func getUserByID(ID int32) (user *User, err error) {
 	sql += "   `account`, "
 	sql += "   `password` "
 	sql += " FROM `account_db`.`user` "
-	sql += " WHERE `id` = ? ;"
+	sql += " WHERE `id` = ?"
 
-	var params []interface{}
-	params = append(params, ID)
+	rows, err := dbS.Query(sql, ID)
 
-	rows, err := dbS.Query(sql, params...)
 	if err != nil {
 		log.Fatalf("Exec Query Failed. fn:%s , err:%s", fn, err.Error())
 		return
@@ -70,8 +68,11 @@ func getUserByID(ID int32) (user *User, err error) {
 	defer rows.Close()
 
 	for rows.Next() {
+
 		user = &User{}
+
 		if err := rows.Scan(
+
 			&user.ID,
 			&user.Account,
 			&user.Password,
